@@ -1,0 +1,65 @@
+<?xml version="1.0" standalone="yes"?>
+<MicroscopeCalibration>
+  <MicroscopeInfo>[ Microscope ]
+Manufacture = Olympus
+Model = BX51
+Objective = 1.25X Plan N
+Objective = 2.5X Plan N
+Objective = 5X Plan N
+Objective = 10X Plan N
+Objective = 20X Plan N
+Objective = 50X Plan N
+Objective = 100X Plan N
+
+[ Camera ]
+Manufacture = Lumenera
+Model = Infinity 3
+CameraID = 0x00a3
+ApiVersion = 2.1.1.125
+DriverVersion =5.2.4.248
+FirmwareVersion = 28.68
+FPGAVersion = 14.62
+SerialNumber =183828</MicroscopeInfo>
+  <LensCombo>
+    <ID>0</ID>
+    <Objective>1.25</Objective>
+    <Relay>1</Relay>
+    <Pitch>2.55</Pitch>
+  </LensCombo>
+  <LensCombo>
+    <ID>1</ID>
+    <Objective>2.5</Objective>
+    <Relay>1</Relay>
+    <Pitch>1.62</Pitch>
+  </LensCombo>
+  <LensCombo>
+    <ID>2</ID>
+    <Objective>5</Objective>
+    <Relay>1</Relay>
+    <Pitch>0.8</Pitch>
+  </LensCombo>
+  <LensCombo>
+    <ID>3</ID>
+    <Objective>10</Objective>
+    <Relay>1</Relay>
+    <Pitch>0.4</Pitch>
+  </LensCombo>
+  <LensCombo>
+    <ID>4</ID>
+    <Objective>20</Objective>
+    <Relay>1</Relay>
+    <Pitch>0.2</Pitch>
+  </LensCombo>
+  <LensCombo>
+    <ID>5</ID>
+    <Objective>50</Objective>
+    <Relay>1</Relay>
+    <Pitch>0.1</Pitch>
+  </LensCombo>
+  <LensCombo>
+    <ID>6</ID>
+    <Objective>100</Objective>
+    <Relay>1</Relay>
+    <Pitch>0.05</Pitch>
+  </LensCombo>
+</MicroscopeCalibration>
