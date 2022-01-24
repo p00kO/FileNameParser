@@ -183,41 +183,40 @@ class FileIO
             {
                 if (item.Id == 6996) hasValue = true;
             }
+
             // ...if not, add stamp:
             if (!hasValue)
             {
                 // Build string to write to file:
-                // string[] data = fileIO.getCalibration(WindowsFormsApp1.Program.getTurretState());
                 string[] data = fileIO.parseFileNamePath(fName);
-
-                if(data == null)
+                if (data == null)
                 {
                     try {
                         img.Dispose();
                         newImg.Dispose();
                         File.Delete(fName);
+                       
                     }
                     catch
                     {
 
                     }
-                    
-                    MessageBox.Show("Your file name " + fName  + " is invalide.\n" +
-                                    "Are you refering the corect lens/objective: (_5x1r, _1p25x1p6r, _100x2r,...)",
-                                    "******* YOUR FILE HAS NOT BEEN SAVED!!!! **********",
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Error,
-                                    MessageBoxDefaultButton.Button3,
-                                    MessageBoxOptions.DefaultDesktopOnly);
+                    MessageBox.Show("Your file name " + fName + " is invalide.\n" +
+                                  "Are you refering the corect lens/objective: (_5x1r, _1p25x1p6r, _100x2r,...)",
+                                  "******* YOUR FILE HAS NOT BEEN SAVED!!!! **********",
+                                  MessageBoxButtons.OK,
+                                  MessageBoxIcon.Error,
+                                  MessageBoxDefaultButton.Button3,
+                                  MessageBoxOptions.DefaultDesktopOnly);
                     return;
                 }
-
 
                 string s = "\n[Calibration]\n" +
                            "Objective = " + data[0] + "\n" +
                            "Relay = " + data[1] + "\n" +
                            "PixelPitch = " + data[2] + "\n\n" +
                            LUT.Tables[0].Rows[0]["MicroscopeInfo"].ToString() + "\n";
+                Console.WriteLine(s);
                 char[] vs = s.ToCharArray();
                 byte[] ba = new byte[vs.Length];
                 for (int i = 0; i < ba.Length; i++)
@@ -361,6 +360,7 @@ class FileIO
         String sfNameT = System.Text.RegularExpressions.Regex.Replace(sFName, @"\s", "");
         String sfNameTrim = System.Text.RegularExpressions.Regex.Replace(sfNameT, @"\.", "p");
         int index = sfNameTrim.LastIndexOf("_") + 1;
+
         if (index < 0) return null;
         String objRelay = sfNameTrim.Substring(index);
 
@@ -369,43 +369,35 @@ class FileIO
         foreach (DataRow dr in LUT.Tables[1].Rows)
         {
             String compObj = System.Text.RegularExpressions.
-                                    Regex.Replace(dr["Objective"].ToString() + "x", @"\.", "p");
+                                    Regex.Replace(dr["Objective"].ToString() + "x", @"\.", "p");            
             if (objRelay.Contains(compObj)) {
-                obj = compObj;
+                obj = dr["Objective"].ToString();
                 break;
             }
         }
 
-/*        if (objRelay.Contains("1p25x")) obj = "1.25";
-        else if (objRelay.Contains("2p5x")) obj = "2.5";
-        else if (objRelay.Contains("5x")) obj = "5";
-        else if (objRelay.Contains("10x")) obj = "10";
-        else if (objRelay.Contains("20x")) obj = "20";
-        else if (objRelay.Contains("50x")) obj = "50";
-        else if (objRelay.Contains("100x")) obj = "100";
-*/
         if (obj == null) return null;
 
-        String Relay = System.Text.RegularExpressions.Regex.Replace(objRelay, obj + @"x", "");
+        String Relay = System.Text.RegularExpressions.Regex.Replace(objRelay, obj + "x", "");
         objRelay = Relay;
+        
         if (!Relay.Contains("r") && Relay.Length > 0) objRelay = Relay + "r";
         if (Relay.Length == 0) objRelay = "1r";
-        if (objRelay.Equals("1r")) relay = "1";
+        if (objRelay.Equals("1r")) relay = "1";        
         else if (objRelay.Equals("1p25r")) relay = "1.25";
         else if (objRelay.Equals("1p6r")) relay = "1.6";
         else if (objRelay.Equals("2r")) relay = "2";
-
+        
         if (relay == null) return null;
-    
         String[] data = { " ", " ", " " };
-        DataTable tb = LUT.Tables[1];
+        DataTable tb = LUT.Tables[1];        
         foreach (DataRow dr in tb.Rows)
         {
             if (dr["Objective"].ToString().Equals(obj) && dr["Relay"].ToString().Equals(relay))
             {
                 data[0] = dr["Objective"].ToString();
                 data[1] = dr["Relay"].ToString();
-                data[2] = dr["Pitch"].ToString();
+                data[2] = dr["Pitch"].ToString();        
                 return data;
             }
         }
